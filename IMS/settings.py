@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -85,18 +85,32 @@ WSGI_APPLICATION = 'IMS.wsgi.application'
 
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME':'django',
+#         'CLIENT': {
+#             'host': 'mongodb+srv://admin:1234@ims.v16m0.mongodb.net/?authMechanism=DEFAULT', # Replace with your MongoDB server address
+#             'port': 27017,               # Replace with your MongoDB port if different
+#             'username': 'admin', # Replace with your MongoDB username (optional)
+#             'password': '1234', # Replace with your MongoDB password (optional)
+#              # Replace with your MongoDB authentication database (optional)
+#         },
+       
+#     }
+# }
+from decouple import config
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME':'django',
+        'NAME': config('MONGO_DB_NAME', default='django'),
         'CLIENT': {
-            'host': 'mongodb+srv://admin:1234@ims.v16m0.mongodb.net/?authMechanism=DEFAULT', # Replace with your MongoDB server address
-            'port': 27017,               # Replace with your MongoDB port if different
-            'username': 'admin', # Replace with your MongoDB username (optional)
-            'password': '1234', # Replace with your MongoDB password (optional)
-             # Replace with your MongoDB authentication database (optional)
+            'host': config('MONGO_HOST'),
+            'port': config('MONGO_PORT', cast=int, default=27017),
+            'username': config('MONGO_USERNAME'),
+            'password': config('MONGO_PASSWORD'),
         },
-       
     }
 }
 
